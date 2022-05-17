@@ -15,7 +15,12 @@ const AllBooths = () => {
 
   const handleClick = (id) => {
     const index = booths.map((e) => e.BGGId).indexOf(id);
-    dispatch(setIsBoothSelected(index));
+    const title = booths[index].Title;
+    const payload = {
+      index: index,
+      title: title,
+    };
+    dispatch(setIsBoothSelected(payload));
   };
   const handleVisitedClick = (id) => {
     const index = booths.map((e) => e.BGGId).indexOf(id);

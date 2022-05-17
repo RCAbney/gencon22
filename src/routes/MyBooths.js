@@ -33,7 +33,12 @@ const MyBooths = () => {
 
   const handleSubtractClick = (id) => {
     const index = allBooths.map((e) => e.BGGId).indexOf(id);
-    dispatch(setIsBoothSelected(index));
+    const title = allBooths[index].Title;
+    const payload = {
+      index: index,
+      title: title,
+    };
+    dispatch(setIsBoothSelected(payload));
   };
   const handleVisitedClick = (id) => {
     const index = allBooths.map((e) => e.BGGId).indexOf(id);
