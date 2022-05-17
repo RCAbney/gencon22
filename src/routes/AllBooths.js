@@ -52,7 +52,7 @@ const AllBooths = () => {
                     <li key={parseInt(booth.BGGId)} className="pl-0">
                       <div className="px-4 py-4 sm:px-6">
                         <div className="flex items-center justify-between">
-                          <div>
+                          <div className="max-w-[70%]">
                             <p className="text-sm font-medium text-indigo-600 truncate">
                               <a
                                 href={`https://boardgamegeek.com/boardgame/${booth.BGGId}`}

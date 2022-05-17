@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Papa from "papaparse";
 import { setAllBooths } from "./app/reducers/allBooths";
+import Header from "./components/Header";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,20 +40,8 @@ function App() {
 
   return (
     <div className="App">
-      {/* header component with nav here */}
-      <h1 className="text-xl font-bold p-4">Gencon 22</h1>
-      <div className="p-4">
-        <Link to="/all-booths">All Booths</Link>
-
-        <Link to="/my-booths">My Booths</Link>
-      </div>
-      <hr />
-      {/* end header with nav here */}
+      <Header />
       <Outlet />
-      {/* footer if needed here */}
-      <hr />
-      <div>footer?</div>
-      {/* end footer if needed here */}
     </div>
   );
 }
