@@ -8,7 +8,7 @@ const Empty = () => {
     navigate("/all-booths");
   };
   return (
-    <div className="m-4">
+    <div className="p-4 flex items-center justify-center h-[calc(100vh-70px)]">
       <button
         type="button"
         className="relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
