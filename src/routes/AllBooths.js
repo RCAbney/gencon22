@@ -1,8 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsBoothSelected } from "../app/reducers/allBooths";
+import {
+  setIsBoothSelected,
+  setIsBoothVisited,
+} from "../app/reducers/allBooths";
 import { PlusSmIcon as PlusSmIconOutline } from "@heroicons/react/outline";
 import { MinusSmIcon as MinusSmIconOutline } from "@heroicons/react/outline";
+import { EyeIcon as EyeIconOutline } from "@heroicons/react/outline";
+import { EyeOffIcon as EyeOffIconOutline } from "@heroicons/react/outline";
 
 const AllBooths = () => {
   const booths = useSelector((state) => state.allBooths.booths);
@@ -11,6 +16,10 @@ const AllBooths = () => {
   const handleClick = (id) => {
     const index = booths.map((e) => e.BGGId).indexOf(id);
     dispatch(setIsBoothSelected(index));
+  };
+  const handleVisitedClick = (id) => {
+    const index = booths.map((e) => e.BGGId).indexOf(id);
+    dispatch(setIsBoothVisited(index));
   };
 
   const allPublishers = [
@@ -44,11 +53,20 @@ const AllBooths = () => {
               {booths
                 .filter((booth) => booth.Publisher === name.Publisher)
                 .map((booth) => {
-                  const selected = booth.isSelected ? "red" : "indigo";
+                  const selected = booth.isSelected
+                    ? "bg-red-600 hover:bg-red-700 focus:ring-red-500"
+                    : "bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500";
+                  const visited = booth.isVisited
+                    ? "bg-sky-700 hover:bg-sky-800 focus:ring-sky-600"
+                    : "bg-sky-500 hover:bg-sky-600 focus:ring-sky-400";
                   return (
                     <li
                       key={parseInt(booth.BGGId)}
-                      className={booth.isSelected ? "pl-0 bg-gray-200" : "pl-0"}
+                      className={
+                        booth.isSelected || booth.isVisited
+                          ? "pl-0 bg-gray-200"
+                          : "pl-0"
+                      }
                     >
                       <div className="px-4 py-4 sm:px-6">
                         <div className="flex items-center justify-between">
@@ -61,6 +79,9 @@ const AllBooths = () => {
                               >
                                 {booth.Title}
                               </a>
+                              <span className="text-xs text-gray-500 font-light">
+                                {booth.isVisited ? " visited" : ""}
+                              </span>
                             </p>
                             <p className="flex items-center text-sm text-gray-500">
                               {booth.Availability}{" "}
@@ -71,7 +92,23 @@ const AllBooths = () => {
                           </div>
                           <div className="ml-2 flex-shrink-0 flex">
                             <button
-                              className={`inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${selected}-500 bg-${selected}-600 hover:bg-${selected}-700`}
+                              className={`inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${visited}`}
+                              onClick={() => handleVisitedClick(booth.BGGId)}
+                            >
+                              {booth.isVisited ? (
+                                <EyeOffIconOutline
+                                  className="h-6 w-6"
+                                  aria-hidden="true"
+                                />
+                              ) : (
+                                <EyeIconOutline
+                                  className="h-6 w-6"
+                                  aria-hidden="true"
+                                />
+                              )}
+                            </button>
+                            <button
+                              className={`ml-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${selected}`}
                               onClick={() => handleClick(booth.BGGId)}
                             >
                               {booth.isSelected ? (

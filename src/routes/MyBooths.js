@@ -1,9 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsBoothSelected } from "../app/reducers/allBooths";
+import {
+  setIsBoothSelected,
+  setIsBoothVisited,
+} from "../app/reducers/allBooths";
 
 import Empty from "../components/Empty";
 import { MinusSmIcon as MinusSmIconOutline } from "@heroicons/react/outline";
+import { EyeIcon as EyeIconOutline } from "@heroicons/react/outline";
+import { EyeOffIcon as EyeOffIconOutline } from "@heroicons/react/outline";
 
 const MyBooths = () => {
   const allBooths = useSelector((state) => state.allBooths.booths);
@@ -30,6 +35,10 @@ const MyBooths = () => {
     const index = allBooths.map((e) => e.BGGId).indexOf(id);
     dispatch(setIsBoothSelected(index));
   };
+  const handleVisitedClick = (id) => {
+    const index = allBooths.map((e) => e.BGGId).indexOf(id);
+    dispatch(setIsBoothVisited(index));
+  };
 
   return (
     <>
@@ -51,8 +60,16 @@ const MyBooths = () => {
                 {filteredBooths
                   .filter((booth) => booth.Publisher === name.Publisher)
                   .map((booth) => {
+                    const visited = booth.isVisited
+                      ? "bg-sky-700 hover:bg-sky-800 focus:ring-sky-600"
+                      : "bg-sky-500 hover:bg-sky-600 focus:ring-sky-400";
                     return (
-                      <li key={parseInt(booth.BGGId)} className="pl-0">
+                      <li
+                        key={parseInt(booth.BGGId)}
+                        className={
+                          booth.isVisited ? "bg-gray-200 pl-0" : "pl-0"
+                        }
+                      >
                         <div className="px-4 py-4 sm:px-6">
                           <div className="flex items-center justify-between">
                             <div>
@@ -64,6 +81,9 @@ const MyBooths = () => {
                                 >
                                   {booth.Title}
                                 </a>
+                                <span className="text-xs text-gray-500 font-light">
+                                  {booth.isVisited ? " visited" : ""}
+                                </span>
                               </p>
                               <p className="flex items-center text-sm text-gray-500">
                                 {booth.Availability}{" "}
@@ -74,7 +94,24 @@ const MyBooths = () => {
                             </div>
                             <div className="ml-2 flex-shrink-0 flex">
                               <button
-                                className="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                className={`inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${visited}`}
+                                onClick={() => handleVisitedClick(booth.BGGId)}
+                              >
+                                {booth.isVisited ? (
+                                  <EyeOffIconOutline
+                                    className="h-6 w-6"
+                                    aria-hidden="true"
+                                  />
+                                ) : (
+                                  <EyeIconOutline
+                                    className="h-6 w-6"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </button>
+
+                              <button
+                                className="ml-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 onClick={() => handleSubtractClick(booth.BGGId)}
                               >
                                 <MinusSmIconOutline

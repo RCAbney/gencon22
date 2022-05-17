@@ -18,9 +18,17 @@ export const allBoothsSlice = createSlice({
         state.booths[action.payload].isSelected = true;
       }
     },
+    setIsBoothVisited: (state, action) => {
+      if (state.booths[action.payload].isVisited) {
+        state.booths[action.payload].isVisited = false;
+      } else {
+        state.booths[action.payload].isVisited = true;
+      }
+    },
   },
 });
 
-export const { setAllBooths, setIsBoothSelected } = allBoothsSlice.actions;
+export const { setAllBooths, setIsBoothSelected, setIsBoothVisited } =
+  allBoothsSlice.actions;
 
 export default allBoothsSlice.reducer;
