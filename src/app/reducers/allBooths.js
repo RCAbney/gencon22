@@ -11,9 +11,16 @@ export const allBoothsSlice = createSlice({
     setAllBooths: (state, action) => {
       state.booths = action.payload;
     },
+    setIsBoothSelected: (state, action) => {
+      if (state.booths[action.payload].isSelected) {
+        state.booths[action.payload].isSelected = false;
+      } else {
+        state.booths[action.payload].isSelected = true;
+      }
+    },
   },
 });
 
-export const { setAllBooths } = allBoothsSlice.actions;
+export const { setAllBooths, setIsBoothSelected } = allBoothsSlice.actions;
 
 export default allBoothsSlice.reducer;

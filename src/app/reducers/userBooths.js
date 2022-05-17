@@ -15,9 +15,19 @@ export const userBoothsSlice = createSlice({
         allUserBooths: [...state.allUserBooths, action.payload],
       };
     },
+    subtractUserBooth: (state, action) => {
+      return {
+        ...state,
+        allUserBooths: [
+          ...state.allUserBooths.filter(
+            (booth) => booth.BGGId !== action.payload
+          ),
+        ],
+      };
+    },
   },
 });
 
-export const { addUserBooth } = userBoothsSlice.actions;
+export const { addUserBooth, subtractUserBooth } = userBoothsSlice.actions;
 
 export default userBoothsSlice.reducer;
