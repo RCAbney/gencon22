@@ -11,11 +11,9 @@ import {
   REGISTER,
 } from "redux-persist";
 import allBoothsSlice from "./reducers/allBooths";
-import userBoothsSlice from "./reducers/userBooths";
 
 const reducers = combineReducers({
   allBooths: allBoothsSlice,
-  userBooths: userBoothsSlice,
 });
 
 const persistConfig = {

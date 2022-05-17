@@ -1,13 +1,21 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsBoothSelected } from "../app/reducers/allBooths";
+
 import Empty from "../components/Empty";
+import { MinusSmIcon as MinusSmIconOutline } from "@heroicons/react/outline";
 
 const MyBooths = () => {
-  const booths = useSelector((state) => state.userBooths.allUserBooths);
+  const allBooths = useSelector((state) => state.allBooths.booths);
+  const dispatch = useDispatch();
+
+  const filteredBooths = allBooths.filter((booth) => {
+    return booth.isSelected === true;
+  });
 
   const allPublishers = [
     ...new Set(
-      booths
+      filteredBooths
         .map((booth) =>
           JSON.stringify({
             Publisher: booth.Publisher,
@@ -18,9 +26,14 @@ const MyBooths = () => {
     ),
   ].map(JSON.parse);
 
+  const handleSubtractClick = (id) => {
+    const index = allBooths.map((e) => e.BGGId).indexOf(id);
+    dispatch(setIsBoothSelected(index));
+  };
+
   return (
     <>
-      {booths.length > 0 ? (
+      {filteredBooths.length > 0 ? (
         allPublishers.map((name, i) => {
           if (!name.Publisher) return false;
           return (
@@ -35,7 +48,7 @@ const MyBooths = () => {
                 </p>
               </div>
               <ul className="divide-y divide-gray-200 list-none pl-0">
-                {booths
+                {filteredBooths
                   .filter((booth) => booth.Publisher === name.Publisher)
                   .map((booth) => {
                     return (
@@ -59,7 +72,17 @@ const MyBooths = () => {
                                   ` - $${booth.MSRP}`}
                               </p>
                             </div>
-                            <div className="ml-2 flex-shrink-0 flex"></div>
+                            <div className="ml-2 flex-shrink-0 flex">
+                              <button
+                                className="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                onClick={() => handleSubtractClick(booth.BGGId)}
+                              >
+                                <MinusSmIconOutline
+                                  className="h-6 w-6"
+                                  aria-hidden="true"
+                                />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </li>
