@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState = {
   booths: [],
@@ -12,10 +13,12 @@ export const allBoothsSlice = createSlice({
       state.booths = action.payload;
     },
     setIsBoothSelected: (state, action) => {
-      if (state.booths[action.payload].isSelected) {
-        state.booths[action.payload].isSelected = false;
+      if (state.booths[action.payload.index].isSelected) {
+        state.booths[action.payload.index].isSelected = false;
+        toast.success(`${action.payload.title} was removed from your booths.`);
       } else {
-        state.booths[action.payload].isSelected = true;
+        state.booths[action.payload.index].isSelected = true;
+        toast.success(`${action.payload.title} was added to your booths.`);
       }
     },
     setIsBoothVisited: (state, action) => {
