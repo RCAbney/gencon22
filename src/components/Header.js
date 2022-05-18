@@ -10,12 +10,12 @@ const Header = () => {
           <Link to="/" className="flex gap-3">
             <img
               src={d20}
-              alt="GenCon Booths app"
+              alt="GBooths app"
               width="30"
               height="30"
               style={{ filter: "brightness(0) invert(1)" }}
             />{" "}
-            GenCon
+            GBooths
           </Link>
         </h2>
       </div>
