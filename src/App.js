@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import { Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Papa from "papaparse";
 import { setAllBooths } from "./app/reducers/allBooths";
-import Header from "./components/Header";
+import { ToastContainer } from "react-toastify";
+import AllBooths from "./routes/AllBooths";
+import MyBooths from "./routes/MyBooths";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -45,9 +46,14 @@ function App() {
 
   return (
     <div className="App">
-      <ToastContainer autoClose={750} position="top-center" />
-      <Header />
-      <Outlet />
+      <BrowserRouter>
+        <ToastContainer autoClose={750} position="top-center" />
+        <Routes>
+          <Route path="/all-booths" element={<AllBooths />} />
+          <Route path="/my-booths" element={<MyBooths />} />
+          <Route path="/" element={<Navigate to="/my-booths" />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

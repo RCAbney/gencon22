@@ -5,6 +5,7 @@ import {
   setIsBoothVisited,
 } from "../app/reducers/allBooths";
 import Empty from "../components/Empty";
+import Layout from "../components/Layout";
 import BoothList from "../components/BoothList";
 
 const MyBooths = () => {
@@ -43,7 +44,7 @@ const MyBooths = () => {
   };
 
   return (
-    <>
+    <Layout>
       {filteredBooths.length > 0 ? (
         <BoothList
           allPublishers={allPublishers}
@@ -54,7 +55,7 @@ const MyBooths = () => {
       ) : (
         <Empty />
       )}
-    </>
+    </Layout>
   );
 };
 

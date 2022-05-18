@@ -4,6 +4,7 @@ import {
   setIsBoothSelected,
   setIsBoothVisited,
 } from "../app/reducers/allBooths";
+import Layout from "../components/Layout";
 import BoothList from "../components/BoothList";
 
 const AllBooths = () => {
@@ -38,12 +39,14 @@ const AllBooths = () => {
   ].map(JSON.parse);
 
   return (
-    <BoothList
-      allPublishers={allPublishers}
-      allBooths={allBooths}
-      handleClick={handleClick}
-      handleVisitedClick={handleVisitedClick}
-    />
+    <Layout>
+      <BoothList
+        allPublishers={allPublishers}
+        allBooths={allBooths}
+        handleClick={handleClick}
+        handleVisitedClick={handleVisitedClick}
+      />
+    </Layout>
   );
 };
 
