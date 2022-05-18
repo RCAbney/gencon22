@@ -9,7 +9,7 @@ const BoothList = ({
   allBooths,
   handleClick,
   handleVisitedClick,
-  subtractOnly = false,
+  filteredView = false,
 }) => {
   return (
     <>
@@ -39,7 +39,11 @@ const BoothList = ({
                     <li
                       key={parseInt(booth.BGGId)}
                       className={
-                        booth.isSelected || booth.isVisited
+                        filteredView
+                          ? booth.isVisited
+                            ? "pl-0 bg-gray-200"
+                            : "pl-0"
+                          : booth.isSelected || booth.isVisited
                           ? "pl-0 bg-gray-200"
                           : "pl-0"
                       }
@@ -83,7 +87,7 @@ const BoothList = ({
                                 />
                               )}
                             </button>
-                            {subtractOnly ? (
+                            {filteredView ? (
                               <button
                                 className="ml-2 inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 onClick={() => handleClick(booth.BGGId)}

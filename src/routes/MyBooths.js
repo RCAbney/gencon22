@@ -51,6 +51,7 @@ const MyBooths = () => {
           allBooths={filteredBooths}
           handleClick={handleClick}
           handleVisitedClick={handleVisitedClick}
+          filteredView
         />
       ) : (
         <Empty />
