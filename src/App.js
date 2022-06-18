@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     if (allBooths.length === 0) {
       async function getData() {
-        const response = await fetch("/data/gencon21-test.csv", {
+        const response = await fetch("/data/gencon-22.csv", {
           method: "get",
           headers: {
             "content-type": "text/csv;charset=UTF-8",
@@ -38,6 +38,7 @@ function App() {
           }
           return 0;
         });
+        console.log(sorted);
         dispatch(setAllBooths(sorted));
       }
       getData();
