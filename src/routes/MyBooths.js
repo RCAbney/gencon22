@@ -29,8 +29,8 @@ const MyBooths = () => {
     ),
   ].map(JSON.parse);
 
-  const handleClick = (id) => {
-    const index = allBooths.map((e) => e.BGGId).indexOf(id);
+  const handleClick = (key) => {
+    const index = allBooths.map((e) => e.rowKey).indexOf(key);
     const title = allBooths[index].Title;
     const payload = {
       index: index,
@@ -38,8 +38,8 @@ const MyBooths = () => {
     };
     dispatch(setIsBoothSelected(payload));
   };
-  const handleVisitedClick = (id) => {
-    const index = allBooths.map((e) => e.BGGId).indexOf(id);
+  const handleVisitedClick = (key) => {
+    const index = allBooths.map((e) => e.rowKey).indexOf(key);
     dispatch(setIsBoothVisited(index));
   };
 

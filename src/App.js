@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     if (allBooths.length === 0) {
       async function getData() {
-        const response = await fetch("/data/gencon-22.csv", {
+        const response = await fetch("/data/gencon-22test.csv", {
           method: "get",
           headers: {
             "content-type": "text/csv;charset=UTF-8",

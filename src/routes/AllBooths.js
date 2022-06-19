@@ -11,8 +11,8 @@ const AllBooths = () => {
   const allBooths = useSelector((state) => state.allBooths.booths);
   const dispatch = useDispatch();
 
-  const handleClick = (id) => {
-    const index = allBooths.map((e) => e.BGGId).indexOf(id);
+  const handleClick = (key) => {
+    const index = allBooths.map((e) => e.rowKey).indexOf(key);
     const title = allBooths[index].Title;
     const payload = {
       index: index,
@@ -20,8 +20,8 @@ const AllBooths = () => {
     };
     dispatch(setIsBoothSelected(payload));
   };
-  const handleVisitedClick = (id) => {
-    const index = allBooths.map((e) => e.BGGId).indexOf(id);
+  const handleVisitedClick = (key) => {
+    const index = allBooths.map((e) => e.rowKey).indexOf(key);
     dispatch(setIsBoothVisited(index));
   };
 
