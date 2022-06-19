@@ -27,7 +27,11 @@ function App() {
         const csv = decoder.decode(result.value);
         const results = Papa.parse(csv, { header: true });
         const rows = results.data;
-        const sorted = rows.sort((a, b) => {
+        const keyed = rows.map((row, index) => ({
+          ...row,
+          rowKey: `${row.BGGId}-${index}`,
+        }));
+        const sorted = keyed.sort((a, b) => {
           const pubA = a.Publisher?.toUpperCase() || "";
           const pubB = b.Publisher?.toUpperCase() || "";
           if (pubA < pubB) {
@@ -38,7 +42,6 @@ function App() {
           }
           return 0;
         });
-        console.log(sorted);
         dispatch(setAllBooths(sorted));
       }
       getData();

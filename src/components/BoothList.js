@@ -37,7 +37,7 @@ const BoothList = ({
                     : "bg-sky-500 hover:bg-sky-600 focus:ring-sky-400";
                   return (
                     <li
-                      key={parseInt(booth.BGGId)}
+                      key={booth.rowKey}
                       className={
                         filteredView
                           ? booth.isVisited
