@@ -28,6 +28,17 @@ const BoothList = ({
             <ul className="divide-y divide-gray-200 list-none pl-0">
               {allBooths
                 .filter((booth) => booth.Publisher === name.Publisher)
+                .sort((a, b) => {
+                  const titleA = a.Title;
+                  const titleB = b.Title;
+                  if (titleA < titleB) {
+                    return -1;
+                  }
+                  if (titleA > titleB) {
+                    return 1;
+                  }
+                  return 0;
+                })
                 .map((booth) => {
                   const selected = booth.isSelected
                     ? "bg-red-600 hover:bg-red-700 focus:ring-red-500"
