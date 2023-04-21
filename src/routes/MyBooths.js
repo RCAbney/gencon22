@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setIsBoothSelected,
   setIsBoothVisited,
@@ -7,31 +7,36 @@ import {
 import Empty from "../components/Empty";
 import Layout from "../components/Layout";
 import BoothList from "../components/BoothList";
+import { useGetAllBoothsQuery } from "../app/reducers/apiSlice";
 
 const MyBooths = () => {
-  const allBooths = useSelector((state) => state.allBooths.booths);
+  const { data, error, isLoading } = useGetAllBoothsQuery();
   const dispatch = useDispatch();
 
-  const filteredBooths = allBooths.filter((booth) => {
-    return booth.isSelected === true;
-  });
+  const filteredBooths = data
+    ? data.filter((booth) => {
+        return booth;
+      })
+    : [];
 
-  const allPublishers = [
-    ...new Set(
-      filteredBooths
-        .map((booth) =>
-          JSON.stringify({
-            Publisher: booth.Publisher,
-            Location: booth.Location,
-          })
-        )
-        .flat()
-    ),
-  ].map(JSON.parse);
+  const allPublishers = data
+    ? [
+        ...new Set(
+          filteredBooths
+            .map((booth) =>
+              JSON.stringify({
+                Publisher: booth.Publisher,
+                Location: booth.Location,
+              })
+            )
+            .flat()
+        ),
+      ].map(JSON.parse)
+    : [];
 
   const handleClick = (key) => {
-    const index = allBooths.map((e) => e.rowKey).indexOf(key);
-    const title = allBooths[index].Title;
+    const index = data.map((e) => e.rowKey).indexOf(key);
+    const title = data[index].Title;
     const payload = {
       index: index,
       title: title,
@@ -39,7 +44,7 @@ const MyBooths = () => {
     dispatch(setIsBoothSelected(payload));
   };
   const handleVisitedClick = (key) => {
-    const index = allBooths.map((e) => e.rowKey).indexOf(key);
+    const index = data.map((e) => e.rowKey).indexOf(key);
     dispatch(setIsBoothVisited(index));
   };
 
