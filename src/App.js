@@ -29,7 +29,10 @@ function App() {
         const rows = results.data;
         const keyed = rows.map((row, index) => ({
           ...row,
-          rowKey: `${row.BGGId}-${index}`,
+          rowKey: `${row.BGGId ? row.BGGId : "NoBGGID"}-${index}`,
+          rowLocationNum: row.Location
+            ? parseInt(row.Location.replace(/\D/g, ""))
+            : 0,
         }));
         const sorted = keyed.sort((a, b) => {
           const pubA = a.Publisher?.toUpperCase() || "";
