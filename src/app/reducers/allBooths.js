@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 const initialState = {
   booths: [],
+  sortedBy: "Publisher",
 };
 
 export const allBoothsSlice = createSlice({
@@ -28,10 +29,53 @@ export const allBoothsSlice = createSlice({
         state.booths[action.payload].isVisited = true;
       }
     },
+    setSortedBy: (state) => {
+      if (state.sortedBy === "Location") {
+        let newSort = [...state.booths];
+        newSort.sort((a, b) => {
+          const pubA = a.Publisher?.toUpperCase() || "";
+          const pubB = b.Publisher?.toUpperCase() || "";
+          if (pubA < pubB) {
+            return -1;
+          }
+          if (pubA > pubB) {
+            return 1;
+          }
+          return 0;
+        });
+        return {
+          ...state,
+          booths: newSort,
+          sortedBy: "Publisher",
+        };
+      } else if (state.sortedBy === "Publisher") {
+        let newSort = [...state.booths];
+        newSort.sort((a, b) => {
+          const locA = a.rowLocationNum;
+          const locB = b.rowLocationNum;
+          if (locA < locB) {
+            return -1;
+          }
+          if (locA > locB) {
+            return 1;
+          }
+          return 0;
+        });
+        return {
+          ...state,
+          booths: newSort,
+          sortedBy: "Location",
+        };
+      }
+    },
   },
 });
 
-export const { setAllBooths, setIsBoothSelected, setIsBoothVisited } =
-  allBoothsSlice.actions;
+export const {
+  setAllBooths,
+  setIsBoothSelected,
+  setIsBoothVisited,
+  setSortedBy,
+} = allBoothsSlice.actions;
 
 export default allBoothsSlice.reducer;
